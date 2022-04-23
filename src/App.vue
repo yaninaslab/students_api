@@ -1,19 +1,36 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <section class="students_list">
+      <student-card
+        v-for="student in students"
+        :key="student.id"
+        :students_data="student"
+      ></student-card>
+    </section>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import StudentCard from "@/components/StudentCard.vue";
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
+    StudentCard,
+  },
+
+  data() {
+    return {
+      students: null,
+      // student: {},
+    };
+  },
+  async mounted() {
+    const url = "https://api.hatchways.io/assessment/students";
+    const response = await fetch(url);
+    const data = await response.json();
+    this.students = data.students;
+  },
+};
 </script>
 
 <style>
