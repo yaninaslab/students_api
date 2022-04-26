@@ -9,7 +9,15 @@
       <p>Company: {{ studentsData.company }}</p>
       <p>Skill: {{ studentsData.skill }}</p>
       <p>Average: {{ calcAverage(studentsData.grades) }}%</p>
-      <input class="tags-input" type="text" />
+      <div class="tag" v-for="(tag, index) in tags" :key="'tag' + index">
+        <span>{{ tag }}</span>
+      </div>
+      <input
+        v-model="tagValue"
+        @keyup.enter="addTags"
+        class="tags-input"
+        type="text"
+      />
       <div class="test-results" v-if="resultsOpened">
         <p>Test 1: &nbsp;&nbsp;&nbsp;&nbsp; {{ studentsData.grades[0] }}%</p>
         <p>Test 2: &nbsp;&nbsp;&nbsp;&nbsp; {{ studentsData.grades[1] }}%</p>
@@ -35,6 +43,8 @@ export default {
     return {
       resultsOpened: false,
       expand: true,
+      tagValue: "",
+      tags: [],
     };
   },
   methods: {
@@ -43,7 +53,6 @@ export default {
         grades.reduce((acc, grade) => {
           return acc + Number(grade);
         }, 0) / grades.length;
-      console.log(average);
       return average;
     },
     openResults() {
@@ -53,6 +62,12 @@ export default {
       } else {
         this.resultsOpened = false;
         this.expand = true;
+      }
+    },
+    addTags() {
+      if (!this.tagValue == "") {
+        this.tags.push(this.tagValue);
+        this.tagValue = "";
       }
     },
   },
@@ -121,5 +136,16 @@ img {
   border-bottom-style: ridge;
   width: 100%;
   height: 30px;
+}
+.tag {
+  float: left;
+  margin-top: 10px;
+  padding: 3px 5px;
+}
+span {
+  background-color: lightgray;
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: black;
 }
 </style>

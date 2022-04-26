@@ -19,16 +19,19 @@
         :studentsData="student"
         :addTag="addTag"
       ></student-card>
+      <!-- <tags-input :addTag="addTag"></tags-input> -->
     </section>
   </div>
 </template>
 
 <script>
 import StudentCard from "@/components/StudentCard.vue";
+// import TagsInput from "@/components/TagsInput.vue";
 export default {
   name: "App",
   components: {
     StudentCard,
+    // TagsInput,
   },
   data() {
     return {
@@ -81,6 +84,9 @@ export default {
   border-bottom-style: ridge;
   width: 100%;
   height: 30px;
+}
+input:focus {
+  outline: none;
 }
 #app {
   font-family: "Montserrat", sans-serif;
