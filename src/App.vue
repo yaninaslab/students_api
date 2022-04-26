@@ -1,10 +1,23 @@
 <template>
   <div id="app">
-    <section class="students_list">
+    <input
+      class="search-input"
+      v-model="search"
+      type="text"
+      placeholder="Search by name"
+    />
+    <input
+      class="search-input"
+      v-model="searchtag"
+      type="text"
+      placeholder="Search by tag"
+    />
+    <section class="students-list">
       <student-card
-        v-for="student in students"
+        v-for="student in filteredStudents"
         :key="student.id"
-        :students_data="student"
+        :studentsData="student"
+        :addTag="addTag"
       ></student-card>
     </section>
   </div>
@@ -17,25 +30,61 @@ export default {
   components: {
     StudentCard,
   },
-
   data() {
     return {
-      students: null,
-      // student: {},
+      students: [],
+      search: "",
+      searchtag: "",
     };
   },
-  async mounted() {
+  async created() {
     const url = "https://api.hatchways.io/assessment/students";
     const response = await fetch(url);
     const data = await response.json();
-    this.students = data.students;
+    this.students = data.students.map((student) => ({ ...student, tags: [] }));
+  },
+  methods: {
+    addTag(studentId, tagName) {
+      const currentStudent = this.students.find(
+        (student) => student.id === studentId
+      );
+
+      if (currentStudent) {
+        currentStudent.tags.push(tagName);
+      }
+    },
+  },
+  computed: {
+    filteredStudents() {
+      return this.students.filter((student) =>
+        student.firstName
+          .concat(student.lastName)
+          .toLowerCase()
+          .includes(this.search)
+      );
+    },
   },
 };
 </script>
 
 <style>
+.students-list {
+  display: grid;
+  margin-top: 60px;
+}
+.search-input {
+  margin: 10px;
+  border: 0.7px solid lightgrey;
+  border-top-style: hidden;
+  border-right-style: hidden;
+  border-left-style: hidden;
+  border-bottom-style: ridge;
+  width: 100%;
+  height: 30px;
+}
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Montserrat", sans-serif;
+  font-family: "Raleway", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
