@@ -48,7 +48,6 @@ export default {
       const currentStudent = this.students.find(
         (student) => student.id === studentId
       );
-      console.log(currentStudent);
 
       if (currentStudent) {
         currentStudent.tags.push(tagName);
