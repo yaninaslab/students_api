@@ -19,19 +19,16 @@
         :studentsData="student"
         :addTag="addTag"
       ></student-card>
-      <!-- <tags-input :addTag="addTag"></tags-input> -->
     </section>
   </div>
 </template>
 
 <script>
 import StudentCard from "@/components/StudentCard.vue";
-// import TagsInput from "@/components/TagsInput.vue";
 export default {
   name: "App",
   components: {
     StudentCard,
-    // TagsInput,
   },
   data() {
     return {

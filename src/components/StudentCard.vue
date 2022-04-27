@@ -14,7 +14,7 @@
         v-for="(tag, index) in studentsData.tags"
         :key="'tag' + index"
       >
-        <span>{{ tag }}</span>
+        <span class="tags">{{ tag }}</span>
       </div>
       <input
         v-model="tagValue"
@@ -27,7 +27,9 @@
           v-for="(grade, index) in studentsData.grades"
           :key="'grade' + index"
         >
-          <p>Test {{ index + 1 }}:{{ grade }}%</p>
+          <p class="results">
+            <span class="margin">Test {{ index + 1 }}:</span>{{ grade }}%
+          </p>
         </div>
       </div>
     </div>
@@ -140,10 +142,17 @@ p {
   margin-top: 10px;
   padding: 3px 5px;
 }
-span {
+.tags {
   background-color: lightgray;
   padding: 5px 10px;
   border-radius: 5px;
   color: black;
+}
+.margin {
+  margin-right: 20px;
+}
+.results {
+  display: flex;
+  justify-content: center;
 }
 </style>
