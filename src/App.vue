@@ -51,6 +51,7 @@ export default {
       const currentStudent = this.students.find(
         (student) => student.id === studentId
       );
+      console.log(currentStudent);
 
       if (currentStudent) {
         currentStudent.tags.push(tagName);
@@ -59,11 +60,17 @@ export default {
   },
   computed: {
     filteredStudents() {
-      return this.students.filter((student) =>
+      let filterByName = this.students.filter((student) =>
         student.firstName
           .concat(student.lastName)
           .toLowerCase()
           .includes(this.search)
+      );
+      if (!this.searchtag) {
+        return filterByName;
+      }
+      return filterByName.filter((student) =>
+        student.tags.find((tag) => tag.includes(this.searchtag))
       );
     },
   },
@@ -73,7 +80,8 @@ export default {
 <style>
 .students-list {
   display: grid;
-  margin-top: 60px;
+  max-width: 600px;
+  margin: 60px auto 0;
 }
 .search-input {
   margin: 10px;

@@ -9,7 +9,11 @@
       <p>Company: {{ studentsData.company }}</p>
       <p>Skill: {{ studentsData.skill }}</p>
       <p>Average: {{ calcAverage(studentsData.grades) }}%</p>
-      <div class="tag" v-for="(tag, index) in tags" :key="'tag' + index">
+      <div
+        class="tag"
+        v-for="(tag, index) in studentsData.tags"
+        :key="'tag' + index"
+      >
         <span>{{ tag }}</span>
       </div>
       <input
@@ -19,14 +23,12 @@
         type="text"
       />
       <div class="test-results" v-if="resultsOpened">
-        <p>Test 1: &nbsp;&nbsp;&nbsp;&nbsp; {{ studentsData.grades[0] }}%</p>
-        <p>Test 2: &nbsp;&nbsp;&nbsp;&nbsp; {{ studentsData.grades[1] }}%</p>
-        <p>Test 3: &nbsp;&nbsp;&nbsp;&nbsp; {{ studentsData.grades[2] }}%</p>
-        <p>Test 4: &nbsp;&nbsp;&nbsp;&nbsp; {{ studentsData.grades[3] }}%</p>
-        <p>Test 5: &nbsp;&nbsp;&nbsp;&nbsp; {{ studentsData.grades[4] }}%</p>
-        <p>Test 6: &nbsp;&nbsp;&nbsp;&nbsp; {{ studentsData.grades[5] }}%</p>
-        <p>Test 7: &nbsp;&nbsp;&nbsp;&nbsp; {{ studentsData.grades[6] }}%</p>
-        <p>Test 8: &nbsp;&nbsp;&nbsp;&nbsp; {{ studentsData.grades[7] }}%</p>
+        <div
+          v-for="(grade, index) in studentsData.grades"
+          :key="'grade' + index"
+        >
+          <p>Test {{ index + 1 }}:{{ grade }}%</p>
+        </div>
       </div>
     </div>
     <div class="expand">
@@ -66,7 +68,7 @@ export default {
     },
     addTags() {
       if (!this.tagValue == "") {
-        this.tags.push(this.tagValue);
+        this.addTag(this.studentsData.id, this.tagValue);
         this.tagValue = "";
       }
     },
@@ -84,8 +86,9 @@ export default {
 
 <style scoped>
 .user-card {
+  padding-top: 10px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   grid-auto-flow: column;
   column-gap: 100px;
   border: 0.7px solid lightgrey;
@@ -100,15 +103,10 @@ p {
   padding: 0;
 }
 .student-pic {
+  border-radius: 50%;
+  border: 1px solid lightgray;
   width: 100px;
   height: 100px;
-  border: black 1px;
-}
-img {
-  border-radius: 5 px 5px 20px 5px;
-  border-radius: 50%;
-  background: whitesmoke;
-  border: black;
 }
 .student-name {
   text-transform: uppercase;
